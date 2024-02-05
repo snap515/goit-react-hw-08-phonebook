@@ -2,14 +2,17 @@ import { useDispatch, useSelector } from 'react-redux'
 import { nanoid } from '@reduxjs/toolkit';
 import { useRef } from 'react';
 import { apiAddContact } from '../../redux/contacts/contactsSlice';
+import { selectContactsList, selectStatus } from '../../redux/contacts/contactSlice.selectors';
 
+import { STATUSES } from 'utils/constants';
 import css from './ContactForm.module.css'
-import { selectContactsList } from '../../redux/contacts/contactSlice.selectors';
+import { ButtonLoader } from 'components';
 
 
 export const ContactForm = () => {
   const dispatch = useDispatch();
   const contacts = useSelector(selectContactsList);
+  const status = useSelector(selectStatus)
 
   const nameRef = useRef(null);
   const phoneRef = useRef(null);
@@ -40,7 +43,8 @@ export const ContactForm = () => {
       <label className={css.label }htmlFor="telInput">Number</label>
       <input className={css.input } ref={phoneRef} type="tel" id="telInput" name="number" pattern="\+?\d{1,4}?[ .\-\s]?\(?\d{1,3}?\)?[ .\-\s]?\d{1,4}[ .\-\s]?\d{1,4}[ .\-\s]?\d{1,9}" required placeholder="123-45-67"/>
 
-      <button className={css.submitBtn }type="submit">Add Contact</button>
+      <button className={css.submitBtn} type="submit">
+        {status === STATUSES.pending ? <ButtonLoader width={20} height={6} color={'white'}/> : 'Add Contact'}</button>
     </form>
   )
 }

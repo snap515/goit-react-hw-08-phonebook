@@ -30,7 +30,7 @@ export const ContactList = () => {
 
   return (
     <>
-      {/* {status === STATUSES.pending && <div>Loading...</div>} */}
+
       {status === STATUSES.error && <div>{error}</div>}
       <ul className={css.contactList}>
 

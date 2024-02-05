@@ -22,6 +22,8 @@
 
 .submitBtn {
   display: block;
+  min-width: 120px;
+  min-height: 40px;
   margin: 0 auto;
   background-color: #4caf50;
   color: white;
