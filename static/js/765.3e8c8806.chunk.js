@@ -1,2 +1,0 @@
-"use strict";(self.webpackChunkgoit_react_hw_08_phonebook=self.webpackChunkgoit_react_hw_08_phonebook||[]).push([[765],{765:function(e,o,t){t.r(o);t(791);var n=t(184);o.default=function(){return(0,n.jsx)("div",{children:"Welcome to Contacts APP"})}}}]);
-//# sourceMappingURL=765.3e8c8806.chunk.js.map

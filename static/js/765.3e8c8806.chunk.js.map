@@ -1,1 +1,0 @@
-{"version":3,"file":"static/js/765.3e8c8806.chunk.js","mappings":"uKAUA,UARA,WACE,OACEA,EAAAA,EAAAA,KAAA,OAAAC,SAAK,2BAIT,C","sources":["Pages/Home/Home.jsx"],"sourcesContent":["import React from 'react'\n\nfunction Home() {\n  return (\n    <div>\n      Welcome to Contacts APP\n    </div>\n  )\n}\n\nexport default Home;\n"],"names":["_jsx","children"],"sourceRoot":""}
