@@ -6,3 +6,6 @@ export { Section } from './Section/Section';
 export { ButtonLoader } from './ButtonLoader/ButtonLoader';
 export { default as UserMenu } from './UserMenu/UserMenu';
 export { default as Navigation } from './Navigation/Navigation';
+export { Layout } from './Layout/Layout';
+export { RestrictedRoute } from './RestrictedRoute/RestrictedRoute';
+export { PrivateRoute } from './PrivateRoute/PrivateRoute';

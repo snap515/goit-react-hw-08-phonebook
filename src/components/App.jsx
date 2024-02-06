@@ -1,9 +1,9 @@
 // import { ContactForm, ContactList, Section, Filter } from 'components';
 import { Suspense, lazy, useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { Layout } from './Layout/Layout';
 import { useDispatch } from 'react-redux';
 import { apiRefreshUser } from '../redux/auth/authSlice';
+import { RestrictedRoute, Layout, PrivateRoute } from 'components';
 
 const Home = lazy(() => import('../Pages/Home/Home'))
 const Register = lazy(() => import('../Pages/Register/Register'))
@@ -21,9 +21,22 @@ export const App = () => {
         <Routes>
           <Route path='/' element={<Layout></Layout>}>
             <Route index element={<Home/>} />
-            <Route path="contacts" element={<Contacts />} />
-            <Route path="register" element={<Register />} />
-            <Route path="login" element={<Login />}/>
+          <Route path="contacts" element={
+            <PrivateRoute>
+              <Contacts />
+            </PrivateRoute>
+            
+          } />
+          <Route path="register" element={
+            <RestrictedRoute>
+              <Register />
+            </RestrictedRoute>
+          } />
+          <Route path="login" element={
+            <RestrictedRoute>
+              <Login/>
+            </RestrictedRoute>
+          } />
           </Route>
             
           </Routes>
