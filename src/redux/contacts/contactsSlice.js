@@ -1,13 +1,14 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import * as contactsApi from 'apiService/apiService';
+import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit';
 import { STATUSES } from 'utils/constants';
+
+import { $authInstance } from '../../redux/auth/authSlice';
 
 export const apiGetContacts = createAsyncThunk(
   'contacts/apiGetContacts',
   async (_, thunkApi) => {
     try {
-      const contacts = await contactsApi.fetchContacts();
-      return contacts;
+      const { data } = await $authInstance.get('/contacts');
+      return data;
     } catch (error) {
       return thunkApi.rejectWithValue(error.message);
     }
@@ -16,10 +17,10 @@ export const apiGetContacts = createAsyncThunk(
 
 export const apiAddContact = createAsyncThunk(
   'contacts/apiAddContact',
-  async (contact, thunkApi) => {
+  async (formData, thunkApi) => {
     try {
-      const newContact = await contactsApi.addContact(contact);
-      return newContact;
+      const { data } = await $authInstance.post('/contacts', formData);
+      return data;
     } catch (error) {
       return thunkApi.rejectWithValue(error.message);
     }
@@ -30,8 +31,8 @@ export const apiDeleteContact = createAsyncThunk(
   'contacts/apiDeleteContact',
   async (id, thunkApi) => {
     try {
-      const contacts = await contactsApi.deleteContact(id);
-      return contacts;
+      const { data } = await $authInstance.delete(`/contacts/${id}`);
+      return data;
     } catch (error) {
       return thunkApi.rejectWithValue(error.message);
     }
@@ -39,7 +40,7 @@ export const apiDeleteContact = createAsyncThunk(
 );
 
 const initialState = {
-  contacts: [],
+  contacts: null,
   status: STATUSES.idle,
   error: null,
 };
@@ -49,46 +50,16 @@ const contactsSlice = createSlice({
   name: 'contacts',
   //начальное состояние редьюсера слайса
   initialState,
-  //объект редьюсеров
-  // reducers: {
-  //   // addContact(state, action) {
-  //   //   state.contacts = [...state.contacts, action.payload];
-  //   // },
-  //   // removeContact(state, action) {
-  //   //   state.contacts = state.contacts.filter(
-  //   //     contact => contact.id !== action.payload
-  //   //   );
-  //   // },
-  // },
+  //объект экстра редьюсеров
   extraReducers: builder => {
     builder
-      .addCase(apiGetContacts.pending, (state, _) => {
-        state.status = STATUSES.pending;
-        state.error = null;
-      })
       .addCase(apiGetContacts.fulfilled, (state, action) => {
         state.status = STATUSES.success;
         state.contacts = action.payload;
       })
-      .addCase(apiGetContacts.rejected, (state, action) => {
-        state.status = STATUSES.error;
-        state.error = action.payload;
-      })
-      .addCase(apiAddContact.pending, (state, _) => {
-        state.status = STATUSES.pending;
-        state.error = null;
-      })
       .addCase(apiAddContact.fulfilled, (state, action) => {
         state.status = STATUSES.success;
         state.contacts.push(action.payload);
-      })
-      .addCase(apiAddContact.rejected, (state, action) => {
-        state.status = STATUSES.error;
-        state.error = action.payload;
-      })
-      .addCase(apiDeleteContact.pending, (state, action) => {
-        state.status = STATUSES.pending;
-        state.error = null;
       })
       .addCase(apiDeleteContact.fulfilled, (state, action) => {
         state.status = STATUSES.success;
@@ -96,10 +67,55 @@ const contactsSlice = createSlice({
           return contactEl.id !== action.payload.id;
         });
       })
-      .addCase(apiDeleteContact.rejected, (state, action) => {
-        state.status = STATUSES.error;
-        state.error = action.payload;
-      });
+      .addMatcher(
+        isAnyOf(
+          apiGetContacts.pending,
+          apiAddContact.pending,
+          apiDeleteContact.pending
+        ),
+        state => {
+          state.status = STATUSES.pending;
+          state.error = null;
+        }
+      )
+      .addMatcher(
+        isAnyOf(
+          apiGetContacts.rejected,
+          apiAddContact.rejected,
+          apiDeleteContact.rejected
+        ),
+        (state, action) => {
+          state.status = STATUSES.error;
+          state.error = action.payload;
+        }
+      );
+
+    // .addCase(apiGetContacts.pending, (state, _) => {
+    //   state.status = STATUSES.pending;
+    //   state.error = null;
+    // })
+
+    // .addCase(apiGetContacts.rejected, (state, action) => {
+    //   state.status = STATUSES.error;
+    //   state.error = action.payload;
+    // })
+    // .addCase(apiAddContact.pending, (state, _) => {
+    //   state.status = STATUSES.pending;
+    //   state.error = null;
+    // })
+    // .addCase(apiAddContact.rejected, (state, action) => {
+    //   state.status = STATUSES.error;
+    //   state.error = action.payload;
+    // })
+    // .addCase(apiDeleteContact.pending, (state, action) => {
+    //   state.status = STATUSES.pending;
+    //   state.error = null;
+    // })
+
+    // .addCase(apiDeleteContact.rejected, (state, action) => {
+    //   state.status = STATUSES.error;
+    //   state.error = action.payload;
+    // });
   },
 });
 

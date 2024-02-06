@@ -42,13 +42,7 @@ export const App = () => {
           </Routes>
         
 
-          {/* <Section title="Phonebook">
-            <ContactForm/>
-          </Section>
-          <Section title="Contacts">
-            <Filter/>
-            <ContactList/>
-          </Section> */}
+          
         </Suspense>
       
     )

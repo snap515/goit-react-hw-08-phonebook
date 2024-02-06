@@ -1,6 +1,4 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { nanoid } from '@reduxjs/toolkit';
-import { useRef } from 'react';
 import { apiAddContact } from '../../redux/contacts/contactsSlice';
 import { selectContactsList, selectStatus } from '../../redux/contacts/contactSlice.selectors';
 
@@ -14,14 +12,11 @@ export const ContactForm = () => {
   const contacts = useSelector(selectContactsList);
   const status = useSelector(selectStatus)
 
-  const nameRef = useRef(null);
-  const phoneRef = useRef(null);
-
   const onSubmit = e => {
     e.preventDefault();
 
-    const name = nameRef.current.value;
-    const phone = phoneRef.current.value;
+    const name = e.currentTarget.elements.name.value;
+    const number = e.currentTarget.elements.number.value;
 
     const alreadyInContacts = contacts.some(contact => contact.name.toLowerCase() === name.trim().toLowerCase())
     if (alreadyInContacts) {
@@ -29,7 +24,7 @@ export const ContactForm = () => {
       return;
     }
 
-    const newContact = {id: nanoid(), name, phone }
+    const newContact = { name, number }
     dispatch(apiAddContact(newContact))
 
     e.currentTarget.reset();
@@ -37,14 +32,39 @@ export const ContactForm = () => {
 
   return (
     <form className={css.form } onSubmit={onSubmit}>
-      <label className={css.label } htmlFor="nameInput" pattern="^[a-zA-Zа-яА-Я]+(([' \-][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$">Name</label>
-      <input className={css.input } ref={nameRef} type="text" id="nameInput" name="name" required placeholder="John"/>               
+      <label
+        className={css.label}
+        htmlFor="nameInput"
+        pattern="^[a-zA-Zа-яА-Я]+(([' \-][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$">
+        Name
+      </label>
+      <input className={css.input}
+        type="text"
+        id="nameInput"
+        name="name"
+        required
+        placeholder="John" />               
 
-      <label className={css.label }htmlFor="telInput">Number</label>
-      <input className={css.input } ref={phoneRef} type="tel" id="telInput" name="number" pattern="\+?\d{1,4}?[ .\-\s]?\(?\d{1,3}?\)?[ .\-\s]?\d{1,4}[ .\-\s]?\d{1,4}[ .\-\s]?\d{1,9}" required placeholder="123-45-67"/>
+      <label
+        className={css.label}
+        htmlFor="telInput">
+        Number
+      </label>
+      <input
+        className={css.input}
+        type="tel"
+        id="telInput"
+        name="number"
+        pattern="\+?\d{1,4}?[ .\-\s]?\(?\d{1,3}?\)?[ .\-\s]?\d{1,4}[ .\-\s]?\d{1,4}[ .\-\s]?\d{1,9}"
+        required
+        placeholder="123-45-67" />
 
       <button className={css.submitBtn} type="submit">
-        {status === STATUSES.pending ? <ButtonLoader width={20} height={6} color={'white'}/> : 'Add Contact'}</button>
+        {status === STATUSES.pending ?
+          <ButtonLoader width={20} height={6} color={'white'} />
+          :
+          'Add Contact'}
+      </button>
     </form>
   )
 }

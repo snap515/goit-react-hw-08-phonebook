@@ -30,15 +30,14 @@ export const ContactList = () => {
 
   return (
     <>
-
       {status === STATUSES.error && <div>{error}</div>}
       <ul className={css.contactList}>
 
-        {filteredContacts?.map(contact => {
+        {Array.isArray(filteredContacts) && filteredContacts?.map(contact => {
           return <ContactItem
             key={contact.id}
             contact={contact}
-            onDeleteContact={onDeleteContact} deletingContact={idToDelete}></ContactItem>
+            onDeleteContact={onDeleteContact} idToDelete={idToDelete}></ContactItem>
         })}
       </ul>
     </>
