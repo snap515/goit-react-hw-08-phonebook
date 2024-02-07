@@ -5,12 +5,15 @@ import { selectContactsList, selectStatus } from '../../redux/contacts/contactSl
 import { STATUSES } from 'utils/constants';
 import css from './ContactForm.module.css'
 import { ButtonLoader } from 'components';
+import { useState } from 'react';
 
 
 export const ContactForm = () => {
   const dispatch = useDispatch();
   const contacts = useSelector(selectContactsList);
   const status = useSelector(selectStatus)
+
+  const [isAddingContact, setIsAddingContact] = useState(false);
 
   const onSubmit = e => {
     e.preventDefault();
@@ -23,9 +26,12 @@ export const ContactForm = () => {
       alert(`Contact ${name} is already in List.`)
       return;
     }
+    setIsAddingContact(true)
 
     const newContact = { name, number }
-    dispatch(apiAddContact(newContact))
+    dispatch(apiAddContact(newContact)).then(() => {
+      setIsAddingContact(false)
+    })
 
     e.currentTarget.reset();
   }
@@ -60,11 +66,7 @@ export const ContactForm = () => {
         placeholder="123-45-67" />
 
       <button className={css.submitBtn} type="submit">
-        {status === STATUSES.pending ?
-          <ButtonLoader width={20} height={6} color={'white'} />
-          :
-          'Add Contact'}
-      </button>
+        {isAddingContact ? <ButtonLoader width={20} height={6} color={'white'}/> : 'Add Contact'}</button>
     </form>
   )
 }
