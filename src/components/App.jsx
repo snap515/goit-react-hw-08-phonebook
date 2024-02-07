@@ -5,10 +5,13 @@ import { useDispatch } from 'react-redux';
 import { apiRefreshUser } from '../redux/auth/authSlice';
 import { RestrictedRoute, Layout, PrivateRoute } from 'components';
 
-const Home = lazy(() => import('../Pages/Home/Home'))
-const Register = lazy(() => import('../Pages/Register/Register'))
-const Login = lazy(() => import('../Pages/Login/Login'))
-const Contacts = lazy(() => import('../Pages/Contacts/Contacts'))
+// import NotFoundPage from 'Pages/NotFoundPage/NotFoundPage';
+
+const HomePage = lazy(() => import('../Pages/HomePage/HomePage'))
+const RegisterPage = lazy(() => import('../Pages/RegisterPage/RegisterPage'))
+const LoginPage = lazy(() => import('../Pages/LoginPage/LoginPage'))
+const ContactsPage = lazy(() => import('../Pages/ContactsPage/ContactsPage'))
+const NotFoundPage = lazy(()=> import ('../Pages/NotFoundPage/NotFoundPage'))
 
 export const App = () => {   
   const dispatch = useDispatch();
@@ -20,29 +23,25 @@ export const App = () => {
         <Suspense fallback={<div>LOADING...</div>}>
         <Routes>
           <Route path='/' element={<Layout></Layout>}>
-            <Route index element={<Home/>} />
+            <Route index element={<HomePage/>} />
           <Route path="contacts" element={
             <PrivateRoute>
-              <Contacts />
-            </PrivateRoute>
-            
+              <ContactsPage />
+            </PrivateRoute>      
           } />
           <Route path="register" element={
             <RestrictedRoute>
-              <Register />
+              <RegisterPage />
             </RestrictedRoute>
           } />
           <Route path="login" element={
             <RestrictedRoute>
-              <Login/>
+              <LoginPage/>
             </RestrictedRoute>
           } />
-          </Route>
-            
-          </Routes>
-        
-
-          
+        </Route>
+        <Route path="*" element={<NotFoundPage/>} />
+        </Routes>
         </Suspense>
       
     )
