@@ -1,14 +1,12 @@
 import React from 'react'
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { apiRegisterUser } from '../../redux/auth/authSlice';
-import { selectAuthError } from '../../redux/auth/authSlice.selectors';
 
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const Register = () => {
   const dispatch = useDispatch();
-  const error = useSelector(selectAuthError)
   const onSubmit = (e) => {
     e.preventDefault();
     const name = e.currentTarget.elements.userName.value;
