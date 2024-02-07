@@ -1,25 +1,29 @@
 import React from 'react'
-import { useDispatch } from 'react-redux';
+import { useDispatch} from 'react-redux';
 import { apiLoginUser } from '../../redux/auth/authSlice';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Login = () => {
   const dispatch = useDispatch();
+
   const onSubmit = (e) => {
     e.preventDefault();
     const email = e.currentTarget.elements.userEmail.value;
     const password = e.currentTarget.elements.userPassword.value;
     const formData = {email, password}
 
-    dispatch(apiLoginUser(formData));
+    dispatch(apiLoginUser(formData))
+      .unwrap()
+      .catch(() => {
+        toast.error(`Something went wrong. Login or password is incorrect.`);
+      });
   }
 
-
-
   return (
-    <div>
+    <>
       <h1>Login Page</h1>
       <form action="" onSubmit={onSubmit}>
-        
         <label>
           Email
           <input
@@ -42,7 +46,8 @@ const Login = () => {
         </label>
         <button type='submit'>Sign in</button>
       </form>
-    </div>
+      {/* {error &&  toast.error(error)} */}
+    </>
   )
 }
 

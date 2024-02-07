@@ -1,8 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { apiAddContact } from '../../redux/contacts/contactsSlice';
-import { selectContactsList, selectStatus } from '../../redux/contacts/contactSlice.selectors';
+import { selectContactsList} from '../../redux/contacts/contactSlice.selectors';
 
-import { STATUSES } from 'utils/constants';
 import css from './ContactForm.module.css'
 import { ButtonLoader } from 'components';
 import { useState } from 'react';
@@ -11,7 +10,6 @@ import { useState } from 'react';
 export const ContactForm = () => {
   const dispatch = useDispatch();
   const contacts = useSelector(selectContactsList);
-  const status = useSelector(selectStatus)
 
   const [isAddingContact, setIsAddingContact] = useState(false);
 

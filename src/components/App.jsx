@@ -4,6 +4,7 @@ import { Route, Routes } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { apiRefreshUser } from '../redux/auth/authSlice';
 import { RestrictedRoute, Layout, PrivateRoute } from 'components';
+import { ToastContainer } from 'react-toastify';
 
 // import NotFoundPage from 'Pages/NotFoundPage/NotFoundPage';
 
@@ -21,28 +22,29 @@ export const App = () => {
 
   return (
         <Suspense fallback={<div>LOADING...</div>}>
-        <Routes>
-          <Route path='/' element={<Layout></Layout>}>
-            <Route index element={<HomePage/>} />
-          <Route path="contacts" element={
-            <PrivateRoute>
-              <ContactsPage />
-            </PrivateRoute>      
-          } />
-          <Route path="register" element={
-            <RestrictedRoute>
-              <RegisterPage />
-            </RestrictedRoute>
-          } />
-          <Route path="login" element={
-            <RestrictedRoute>
-              <LoginPage/>
-            </RestrictedRoute>
-          } />
-        </Route>
-        <Route path="*" element={<NotFoundPage/>} />
-        </Routes>
+          <Routes>
+            <Route path='/' element={<Layout/>}>
+              <Route index element={<HomePage/>} />
+            <Route path="contacts" element={
+              <PrivateRoute>
+                <ContactsPage />
+              </PrivateRoute>      
+            } />
+            <Route path="register" element={
+              <RestrictedRoute>
+                <RegisterPage />
+              </RestrictedRoute>
+            } />
+            <Route path="login" element={
+              <RestrictedRoute>
+                <LoginPage/>
+              </RestrictedRoute>
+            } />
+            </Route>
+            <Route path="*" element={<NotFoundPage/>} />
+          </Routes>
+          <ToastContainer/>
         </Suspense>
-      
+        
     )
 };

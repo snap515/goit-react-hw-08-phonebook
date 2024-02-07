@@ -1,9 +1,14 @@
 import React from 'react'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { apiRegisterUser } from '../../redux/auth/authSlice';
+import { selectAuthError } from '../../redux/auth/authSlice.selectors';
+
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Register = () => {
   const dispatch = useDispatch();
+  const error = useSelector(selectAuthError)
   const onSubmit = (e) => {
     e.preventDefault();
     const name = e.currentTarget.elements.userName.value;
@@ -11,7 +16,10 @@ const Register = () => {
     const password = e.currentTarget.elements.userPassword.value;
     const formData = {name, email, password}
 
-    dispatch(apiRegisterUser(formData));
+    dispatch(apiRegisterUser(formData)).unwrap()
+      .catch(() => {
+        toast.error(`"${name}" is already in use.`);
+      });;
   }
 
 
