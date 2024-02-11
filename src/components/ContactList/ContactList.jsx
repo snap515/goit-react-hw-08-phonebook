@@ -5,7 +5,7 @@ import { selectContactsFilter } from '../../redux/filter/filtlerSlice.selectors'
 import { selectError, selectStatus } from '../../redux/contacts/contactSlice.selectors';
 import { ContactItem } from 'components';
 import { STATUSES } from 'utils/constants';
-import css from './ContactList.module.css' 
+import css from './ContactList.module.css'
 
 export const ContactList = () => {
   const dispatch = useDispatch();
@@ -21,11 +21,11 @@ export const ContactList = () => {
   }, [dispatch])
 
   const onDeleteContact = id => {
-    const isConfirmed = window.confirm('Are you sure want to delete this contact?');
-    if (isConfirmed) {
+    // const isConfirmed = window.confirm('Are you sure want to delete this contact?');
+    // if (isConfirmed) {
       setIdToDelete(id)
       dispatch(apiDeleteContact(id));
-    }
+    // }
   }
 
   return (
@@ -37,7 +37,10 @@ export const ContactList = () => {
           return <ContactItem
             key={contact.id}
             contact={contact}
-            onDeleteContact={onDeleteContact} idToDelete={idToDelete}></ContactItem>
+            onDeleteContact={onDeleteContact}
+            idToDelete={idToDelete}
+            status = {status}>
+            </ContactItem>
         })}
       </ul>
     </>

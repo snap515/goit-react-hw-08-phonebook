@@ -2,9 +2,7 @@ import React from 'react'
 
 function Home() {
   return (
-    <div>
-      Welcome to Contacts APP
-    </div>
+      <h1>Welcome to Contacts APP</h1>
   )
 }
 

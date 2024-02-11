@@ -2,25 +2,35 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 import { selectAuthIsLoggedIn } from '../../redux/auth/authSlice.selectors'
+import css from './Navigation.module.css'
+
+function activeLinkStyle({isActive}) {
+  return `${css.navLink} ${isActive ? css.active : ''}`
+}
 
 const Navigation = () => {
   const isLoggedIn = useSelector(selectAuthIsLoggedIn);
 
   return (
-    <div>
-      <NavLink to="/">Home</NavLink>
+    <>
+      
       {isLoggedIn ?
-        <NavLink to="/contacts">Contacts</NavLink>
+        <div className={css.navList}>
+          <NavLink className={activeLinkStyle} to="/">Home</NavLink>
+          <NavLink className={activeLinkStyle} to="/contacts">Contacts</NavLink>
+        </div>
         :
-        <>
-          <NavLink to="/login">Login</NavLink>
-          <NavLink to="/register">Register</NavLink>
-        </>
+        <div className={`${css.navList} ${css.notLoggedIn}`} >
+          <NavLink className={activeLinkStyle} to="/">Home</NavLink>
+          <div className={css.authCover}>
+            <NavLink className={activeLinkStyle} to="/login">Login</NavLink>
+            <NavLink className={activeLinkStyle} to="/register">Register</NavLink>
+          </div>
+        </div>
+        
       }
-      
-      
-    </div>
+    </>
   )
 }
 
-export default Navigation
+export default Navigation;

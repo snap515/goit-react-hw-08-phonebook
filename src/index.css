@@ -1,4 +1,7 @@
-@import-normalize; /* bring in normalize.css styles */
+/* @import-normalize; */
+/* @import '../node_modules/normalize.css/normalize.css' */
+
+/* bring in normalize.css styles */
 
 body {
   margin: 0;
@@ -12,4 +15,40 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+p {
+  margin: 0;
+}
+
+:root {
+  --main-color: #35625d;
+  --secondary-color: white;
+  --third-color: #b99775;
+
+}
+
+a {
+  text-decoration: none;
+}
+
+.container {
+  min-width: 320px;
+  max-width: 375px;
+  padding: 0 20px;
+  margin: 0 auto;
+}
+
+@media screen and (min-width: 768px) {
+  .container {
+    max-width: 768px;
+    padding: 0 32px;
+  }
+}
+
+@media screen and (min-width: 1360px) {
+  .container {
+    max-width: 1440px;
+    padding: 0 100px;
+  }
 }

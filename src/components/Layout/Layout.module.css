@@ -1,0 +1,8 @@
+.header {
+  margin-top: 10px;
+}
+
+.headerIsLoggedIn {
+  display: flex;
+  justify-content: space-between;
+}
