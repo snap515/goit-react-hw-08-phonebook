@@ -24,7 +24,7 @@
 }
 
 .navLink:hover {
-  transform: scale(1.03);
+  transform: scale(var(--anim-scale));
 }
 
 .active {

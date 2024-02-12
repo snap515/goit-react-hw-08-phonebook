@@ -1,6 +1,5 @@
 /* @import-normalize; */
-/* @import '../node_modules/normalize.css/normalize.css' */
-
+/* @import '../node_modules/normalize.css/'; */
 /* bring in normalize.css styles */
 
 body {
@@ -17,8 +16,15 @@ code {
     monospace;
 }
 
-p {
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   margin: 0;
+  padding: 0;
 }
 
 :root {
@@ -26,6 +32,7 @@ p {
   --secondary-color: white;
   --third-color: #b99775;
 
+  --anim-scale: 1.13;
 }
 
 a {

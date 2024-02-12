@@ -4,6 +4,8 @@ import { apiLoginUser } from '../../redux/auth/authSlice';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+import css from './LoginPage.module.css'
+
 const Login = () => {
   const dispatch = useDispatch();
 
@@ -21,33 +23,41 @@ const Login = () => {
   }
 
   return (
-    <>
-      <h1>Login Page</h1>
-      <form action="" onSubmit={onSubmit}>
-        <label>
+    <div className={css.container}>
+      <h1 className={css.sectionName}>Login Page</h1>
+      <form className={css.form} onSubmit={onSubmit}>
+        <div className={css.inputContainer}>
+          <label htmlFor='email' className={css.label}>
           Email
-          <input
+        </label>
+        <input
+          id='email'
           type='email'
           name='userEmail'
           placeholder='youremail@mail.com'
+          className={css.input}
           required>
           </input>
-        </label>
+        </div>
         
-        <label>
+        <div className={css.inputContainer}>
+          <label htmlFor='password' className={css.label}>
           Password
-          <input
+        </label>
+        <input
+          id='password'
           type='password'
           name='userPassword'
-          placeholder='********'
           minLength={7}
+          className={css.input}
           required>
           </input>
-        </label>
-        <button type='submit'>Sign in</button>
+        </div>
+        
+        <button className={css.button} type='submit'>Sign in</button>
       </form>
       {/* {error &&  toast.error(error)} */}
-    </>
+    </div>
   )
 }
 

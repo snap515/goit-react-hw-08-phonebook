@@ -5,6 +5,8 @@ import { apiRegisterUser } from '../../redux/auth/authSlice';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+import css from './RegisterPage.module.css'
+
 const Register = () => {
   const dispatch = useDispatch();
   const onSubmit = (e) => {
@@ -23,42 +25,45 @@ const Register = () => {
 
 
   return (
-    <div>
-      <h1>Register Page</h1>
-      <form action="" onSubmit={onSubmit}>
-        <label>
-          Name
-        <input
-          type='text'
-          name='userName'
-          placeholder='John'
-          minLength={2}
-          required>
-          </input>
-        </label>
-        
-        
-        <label>
-          Email
+    <div className={css.container}>
+      <h1 className={css.sectionName}>Register Page</h1>
+      <form className={css.form} onSubmit={onSubmit}>
+        <div className={css.inputContainer}>
+          <label htmlFor='userName' className={css.label}>Name</label>
           <input
-          type='email'
-          name='userEmail'
-          placeholder='youremail@mail.com'
-          required>
+            className={css.input}
+            id='userName'
+            type='text'
+            name='userName'
+            placeholder='John'
+            minLength={2}
+            required>
           </input>
-        </label>
-        
-        <label>
-          Password
+        </div>
+        <div className={css.inputContainer}>
+          <label htmlFor='email' className={css.label}>Email</label>
           <input
-          type='password'
-          name='userPassword'
-          placeholder='********'
-          minLength={7}
-          required>
+            className={css.input}
+            id='email'
+            type='email'
+            name='userEmail'
+            placeholder='youremail@mail.com'
+            required>
           </input>
-        </label>
-        <button type='submit'>Sign Up</button>
+        </div>
+        <div className={css.inputContainer}>
+          <label htmlFor='password' className={css.label}>Password</label>
+          <input
+            className={css.input}
+            id='password'
+            type='password'
+            name='userPassword'
+            minLength={7}
+            required>
+          </input>
+        </div>
+
+        <button className={css.button} type='submit'>Sign Up</button>
       </form>
     </div>
   )

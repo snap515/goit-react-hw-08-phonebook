@@ -1,0 +1,46 @@
+.container {
+  margin-top: 20px;
+  padding: 20px;
+  border: 1px solid var(--third-color);
+  border-radius: 7px;
+
+  background-color: var(--main-color);
+}
+
+.sectionName {
+  color: var(--secondary-color);
+  text-align: center;
+}
+
+.form {}
+
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.label {
+  color: var(--secondary-color)
+}
+
+.input {}
+
+.button {
+  display: block;
+  margin: 0 auto;
+  margin-top: 15px;
+
+  width: 100px;
+  height: 30px;
+
+  border-radius: 7px;
+
+  color: var(--main-color);
+  background-color: var(--third-color);
+
+  transition: all 0.3s;
+}
+
+.button:hover {
+  transform: scale(var(--anim-scale));
+}
