@@ -3,12 +3,15 @@
   padding: 20px;
   border: 1px solid #adadad;
   border-radius: 5px;
+  background-color: var(--main-color);
 }
 
 .label {
   display: block;
   margin-bottom: 8px;
   font-weight: bold;
+
+  color: var(--secondary-color);
 }
 
 .input {
@@ -22,17 +25,23 @@
 
 .submitBtn {
   display: block;
+  padding: 10px 15px;
+  margin: 0 auto;
+
   min-width: 120px;
   min-height: 40px;
-  margin: 0 auto;
-  background-color: #4caf50;
-  color: white;
-  padding: 10px 15px;
+
   border: none;
-  border-radius: 4px;
+  border-radius: 7px;
   cursor: pointer;
+
+  background-color: var(--third-color);
+  color: var(--main-color);
+
+  transition: all 0.3s;
 }
 
 .submitBtn:hover {
-  background-color: #45a049;
+  transform: scale(var(--anim-scale));
+  background-color: rgb(181, 222, 78);
 }

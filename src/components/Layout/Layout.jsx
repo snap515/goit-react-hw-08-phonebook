@@ -20,7 +20,7 @@ export const Layout = () => {
         <Outlet/>
       </main>
       <footer>
-        <p>Developed by Anton Pedan</p>
+        <p></p>
       </footer>
     </div>
   )

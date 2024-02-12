@@ -11,7 +11,7 @@ export const Filter = () => {
   }
   return (
     <div className={css.filterWrapper}>
-      <label className={css.filterLabel} htmlFor="filter">Find contacts by name</label>
+      <label className={css.filterLabel} htmlFor="filter">Search</label>
       <input className={css.filterInput}type="text" id="filter" name="filter" onChange={onFilterChange}  placeholder="John" />
     </div>
   )
