@@ -1,8 +1,11 @@
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit';
 import axios from 'axios';
 
+// export const $authInstance = axios.create({
+//   baseURL: 'https://connections-api.herokuapp.com',
+// });
 export const $authInstance = axios.create({
-  baseURL: 'https://connections-api.herokuapp.com',
+  baseURL: 'https://contacts-reader-backend-6a1v.onrender.com/api',
 });
 
 const setToken = token => {
@@ -17,9 +20,9 @@ export const apiRegisterUser = createAsyncThunk(
   'auth/apiRegisterUser',
   async (formData, thunkApi) => {
     try {
-      const { data } = await $authInstance.post('/users/signup', formData);
+      const { data } = await $authInstance.post('/auth/register', formData);
       // {user: {name: 'wasda', email: 'wasda@mail.com'}, token: 'asdasdasd'}
-      setToken(data.token);
+      // setToken(data.token);
       return data;
     } catch (error) {
       return thunkApi.rejectWithValue(error.message);
@@ -31,7 +34,7 @@ export const apiLoginUser = createAsyncThunk(
   'auth/apiLoginUser',
   async (formData, thunkApi) => {
     try {
-      const { data } = await $authInstance.post('/users/login', formData);
+      const { data } = await $authInstance.post('/auth/login', formData);
       // {user: {name: 'wasda', email: 'wasda@mail.com'}, token: 'asdasdasd'}
       setToken(data.token);
       return data;
@@ -49,8 +52,7 @@ export const apiRefreshUser = createAsyncThunk(
     if (!token) return thunkApi.rejectWithValue('You dont have a token');
     try {
       setToken(token);
-      const { data } = await $authInstance.get('/users/current');
-      // {user: {name: 'wasda', email: 'wasda@mail.com'}, token: 'asdasdasd'}
+      const { data } = await $authInstance.get('/auth/current');
       return data;
     } catch (error) {
       return thunkApi.rejectWithValue(error.message);
@@ -62,7 +64,7 @@ export const apiLogoutUser = createAsyncThunk(
   'auth/apiLogoutUser',
   async (_, thunkApi) => {
     try {
-      await $authInstance.post('/users/logout');
+      await $authInstance.post('/auth/logout');
       clearToken();
       return;
     } catch (error) {
@@ -88,14 +90,14 @@ const authSlice = createSlice({
     builder
       .addCase(apiRegisterUser.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.isLoggedIn = true;
+        // state.isLoggedIn = true;
         state.userData = action.payload.user;
-        state.token = action.payload.token;
+        // state.token = action.payload.token;
       })
       .addCase(apiLoginUser.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isLoggedIn = true;
-        state.userData = action.payload.user;
+        state.userData = action.payload;
         state.token = action.payload.token;
       })
       .addCase(apiRefreshUser.fulfilled, (state, action) => {

@@ -64,7 +64,7 @@ const contactsSlice = createSlice({
       .addCase(apiDeleteContact.fulfilled, (state, action) => {
         state.status = STATUSES.success;
         state.contacts = state.contacts.filter(contactEl => {
-          return contactEl.id !== action.payload.id;
+          return contactEl._id !== action.payload._id;
         });
       })
       .addMatcher(

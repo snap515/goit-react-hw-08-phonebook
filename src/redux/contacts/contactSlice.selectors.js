@@ -21,3 +21,8 @@ export const selectError = createSelector(
   selectContacts,
   contacts => contacts.error
 );
+
+export const selectIdToDelete = createSelector(
+  selectContacts,
+  contacts => contacts.idToDelete
+);

@@ -1,11 +1,10 @@
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux';
 import { apiAddContact } from '../../redux/contacts/contactsSlice';
-import { selectContactsList} from '../../redux/contacts/contactSlice.selectors';
+import { selectContactsList } from '../../redux/contacts/contactSlice.selectors';
 
-import css from './ContactForm.module.css'
+import css from './ContactForm.module.css';
 import { ButtonLoader } from 'components';
 import { useState } from 'react';
-
 
 export const ContactForm = () => {
   const dispatch = useDispatch();
@@ -17,54 +16,63 @@ export const ContactForm = () => {
     e.preventDefault();
 
     const name = e.currentTarget.elements.name.value;
-    const number = e.currentTarget.elements.number.value;
+    const phone = e.currentTarget.elements.phone.value;
 
-    const alreadyInContacts = contacts.some(contact => contact.name.toLowerCase() === name.trim().toLowerCase())
+    const alreadyInContacts = contacts.some(
+      contact => contact.name.toLowerCase() === name.trim().toLowerCase()
+    );
     if (alreadyInContacts) {
-      alert(`Contact ${name} is already in List.`)
+      alert(`Contact ${name} is already in List.`);
       return;
     }
-    setIsAddingContact(true)
+    setIsAddingContact(true);
 
-    const newContact = { name, number }
+    const newContact = { name, phone };
     dispatch(apiAddContact(newContact)).then(() => {
-      setIsAddingContact(false)
-    })
+      setIsAddingContact(false);
+    });
 
     e.currentTarget.reset();
-  }
+  };
 
   return (
-    <form className={css.form } onSubmit={onSubmit}>
+    <form className={css.form} onSubmit={onSubmit}>
       <label
         className={css.label}
         htmlFor="nameInput"
-        pattern="^[a-zA-Zа-яА-Я]+(([' \-][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$">
+        pattern="^[a-zA-Zа-яА-Я]+(([' \-][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+      >
         Name
       </label>
-      <input className={css.input}
+      <input
+        className={css.input}
         type="text"
         id="nameInput"
         name="name"
         required
-        placeholder="John" />               
+        placeholder="John"
+      />
 
-      <label
-        className={css.label}
-        htmlFor="telInput">
+      <label className={css.label} htmlFor="telInput">
         Number
       </label>
       <input
         className={css.input}
         type="tel"
         id="telInput"
-        name="number"
+        name="phone"
         pattern="\+?\d{1,4}?[ .\-\s]?\(?\d{1,3}?\)?[ .\-\s]?\d{1,4}[ .\-\s]?\d{1,4}[ .\-\s]?\d{1,9}"
         required
-        placeholder="123-45-67" />
+        placeholder="123-45-67"
+      />
 
       <button className={css.submitBtn} type="submit">
-        {isAddingContact ? <ButtonLoader width={20} height={6} color={'white'}/> : 'Add Contact'}</button>
+        {isAddingContact ? (
+          <ButtonLoader width={20} height={6} color={'white'} />
+        ) : (
+          'Add Contact'
+        )}
+      </button>
     </form>
-  )
-}
+  );
+};
