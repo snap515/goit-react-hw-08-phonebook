@@ -10,7 +10,6 @@ import css from './UserMenu.module.css';
 const UserMenu = () => {
   const dispatch = useDispatch();
   const userData = useSelector(selectAuthUserData);
-  console.log(userData);
   const isLoading = useSelector(selectAuthIsLoading);
 
   const userEmail = userData?.email ?? "Couldn't get user email";
